@@ -1,103 +1,105 @@
 body {
   padding-top:3em;
-  font-size: 14px !important
+  font-size:14px !important
 }
 
 h1 {
-  padding: 1em
+  padding:1em
 }
 
 h3 {
-  margin-bottom: 0
+  margin-bottom:0
 }
 
 h3 small {
-  font-size: 0.5em;
-  vertical-align: middle
+  font-size:0.5em;
+  vertical-align:middle
 }
 
 .btn {
-  transition: color 0.25s ease-in-out, background-color 0.25s ease-in-out, border-color 0.25s ease-in-out, box-shadow 0.125s ease-in-out
+  transition:color 0.25s ease-in-out, background-color 0.25s ease-in-out, border-color 0.25s ease-in-out, box-shadow 0.125s ease-in-out
 }
 
-.btn:focus,
-.btn:active:focus {
-  box-shadow: none !important
+.btn:focus, .btn:active:focus {
+  box-shadow:none !important
 }
 
 .btn-outline-danger:disabled.hover {
-  color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
-  opacity: 1
+  color:#fff;
+  background-color:#dc3545;
+  border-color:#dc3545;
+  opacity:1
 }
 
 .btn-outline-primary:disabled.hover {
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
-  opacity: 1
+  color:#fff;
+  background-color:#007bff;
+  border-color:#007bff;
+  opacity:1
 }
 
 .btn-outline-success:disabled.hover {
-  color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
-  opacity: 1
+  color:#fff;
+  background-color:#28a745;
+  border-color:#28a745;
+  opacity:1
 }
 
 .btn-outline-warning:disabled.hover {
-  color: black;
-  background-color: #ffc107;
-  border-color: #ffc107;
-  opacity: 1
+  color:black;
+  background-color:#ffc107;
+  border-color:#ffc107;
+  opacity:1
 }
 
 #start .btn {
-  display: block;
-  margin-bottom: 1em
+  display:block;
+  margin-bottom:1em
 }
 
 .container {
-  width: 578px !important;
+  width:578px !important
 }
 
 .player {
-  margin-bottom: -8px
+  margin-bottom:-8px
 }
 
 .player-last {
-  margin-bottom: 8px
+  margin-bottom:8px
 }
 
-.player:before,
-#turn:before {
-  content: "\25CF\00a0\00a0";
-  font-size: 18px
+.player:before, #turn:before {
+  content:"\25CF\00a0\00a0";
+  font-size:18px
 }
 
 #turn:before {
-  position: relative;
-  top: 1px
+  position:relative;
+  top:1px
 }
 
 .player-1:before {
-  color: #ea323c
+  color:#ea323c
 }
 
 .player-2:before {
-  color: #0098dc
+  color:#0098dc
 }
 
 .player-3:before {
-  color: #5ac54f
+  color:#5ac54f
 }
 
 .player-4:before {
-  color: #ffc825
+  color:#ffc825
+}
+
+#game {
+  padding-top:3em
 }
 
 #game center {
-  margin-top: 1.25em;
-  margin-bottom: 1em
+  margin-top:1.25em;
+  margin-bottom:1em
 }

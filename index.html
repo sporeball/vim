@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>vim</title>
+    <meta charset="utf-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  </head>
+  <body>
+    <div id="start">
+      <center>
+        <h1 class="d-none">vim</h1>
+        <button id="2_player" class="btn btn-outline-primary d-none">2-player</button>
+        <button id="3_player" class="btn btn-outline-success d-none">3-player</button>
+        <button id="4_player" class="btn btn-outline-warning d-none">4-player</button>
+      </center>
+    </div>
+    <div id="game" class="d-none">
+      <div class="container">
+        <h3>vim <small id="player_count"></small></h3>
+        <p id="player_1" class="player player-1">$20</p>
+        <p id="player_2" class="player player-2">$20</p>
+        <p id="player_3" class="player player-3 d-none">$20</p>
+        <p id="player_4" class="player player-4 d-none">$20</p>
+      </div>
+      <center>
+        <canvas id="canvas"></canvas>
+      </center>
+      <center>
+        <p id="turn" class="player-1">player 1's turn</p>
+        <button id="roll" class="btn btn-outline-danger">roll!</button>
+      </center>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

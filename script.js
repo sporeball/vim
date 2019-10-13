@@ -45,7 +45,7 @@ $("#gesture").click(function() {
       loadSound.play();
       $("h1").removeClass("d-none");
       init();
-    }, 1000)
+    }, 500)
   } else {
     
   }

@@ -18,6 +18,19 @@ var loadSound = new Howl({
   volume: 0.5
 });
 
+var uiSound = new Howl({
+  src: ["res/audio/ui.wav"],
+  volume: 0.5
+});
+
+var startSound = new Howl({
+  src: ["res/audio/start.wav"]
+});
+
+var rollSound = new Howl({
+  src: ["res/audio/roll.ogg"]
+});
+
 var ready = false;
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -41,12 +54,15 @@ $("#gesture").click(function() {
 function init() {
   setTimeout(function() {
     $("#2_player").removeClass("d-none");
+    uiSound.play();
   }, 750)
   setTimeout(function() {
     $("#3_player").removeClass("d-none");
+    uiSound.play();
   }, 1000)
   setTimeout(function() {
     $("#4_player").removeClass("d-none");
+    uiSound.play();
   }, 1250)
 }
 
@@ -77,6 +93,8 @@ function start(players) {
 
   $("#start").addClass("d-none");
   $("#game").removeClass("d-none");
+  
+  startSound.play();
 
   grid();
 }
@@ -158,6 +176,9 @@ function predraw(players) {
 function roll() {
   // disable the button for the die
   $("#roll").attr("disabled", true);
+  
+  rollSound.seek(1);
+  rollSound.play();
 
   // start to change the face of the die
   var face = setInterval(function() {

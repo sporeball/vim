@@ -13,8 +13,30 @@ var ownership = Array(11).fill(0).map(x => Array(11).fill(0));
 var vim = Array(11).fill(0).map(x => Array(11).fill(0));
 // thanks Longfei Wu
 
-$("h1").removeClass("d-none");
-init();
+var loadSound = new Howl({
+  src: ["res/audio/load.ogg"],
+  volume: 0.5
+});
+
+var ready = false;
+
+window.addEventListener('DOMContentLoaded', (event) => {
+  ready = true;
+  $("#gesture").removeClass("d-none");
+});
+
+$("#gesture").click(function() {
+  if (ready) {
+    $("#gesture").addClass("d-none");
+    setTimeout(function() {
+      loadSound.play();
+      $("h1").removeClass("d-none");
+      init();
+    }, 1000)
+  } else {
+    
+  }
+});
     
 function init() {
   setTimeout(function() {

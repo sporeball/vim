@@ -1,5 +1,4 @@
 body {
-  padding-top:3em;
   font-size:14px !important
 }
 
@@ -14,6 +13,29 @@ h3 {
 h3 small {
   font-size:0.5em;
   vertical-align:middle
+}
+
+#gesture {
+  width:90%;
+  height:90%;
+  position:relative;
+  top:50%;
+  transform:translateY(-50%);
+  margin:0 auto
+}
+
+#gesture p {
+  font-size:16px;
+  text-align:center;
+  position:relative;
+  top:50%;
+  -ms-transform:translateY(-50%);
+  -webkit-transform:translateY(-50%);
+  transform:translateY(-50%)
+}
+
+#start {
+  padding-top:3em
 }
 
 .btn {

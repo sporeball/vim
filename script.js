@@ -30,6 +30,11 @@ var startSound = new Howl({
   src: ["res/audio/start.wav"]
 });
 
+var selectSound = new Howl({
+  src: ["res/audio/select.ogg"],
+  volume: 0.5
+});
+
 var rollSound = new Howl({
   src: ["res/audio/roll.ogg"]
 });
@@ -218,6 +223,7 @@ function chooseDirection(choice) {
   }
   
   direction = choice;
+  selectSound.play();
 }
 
 function chooseSign(choice) {
@@ -238,6 +244,9 @@ function chooseSign(choice) {
         $("#roll_container").removeClass("d-none");
       }, 750)
   }
+  
+  sign = choice;
+  selectSound.play();
 }
 
 function roll() {

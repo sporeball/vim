@@ -92,6 +92,10 @@ h3 small {
   width:578px !important
 }
 
+.col {
+  padding:0 !important
+}
+
 .player {
   margin-bottom:-8px
 }
@@ -100,7 +104,7 @@ h3 small {
   margin-bottom:8px
 }
 
-.player:before, #turn:before {
+.player:before {
   content:"\25CF\00a0\00a0";
   font-size:18px
 }
@@ -133,4 +137,40 @@ h3 small {
 #game center {
   margin-top:1.25em;
   margin-bottom:1em
+}
+
+.icon-button {
+  position:relative;
+  width:26px;
+  height:26px
+}
+
+.icon-button svg {
+  width:16px;
+  height:16px;
+  position:absolute;
+  top:50%;
+  -webkit-transform:translateY(-50%);
+  -ms-transform:translateY(-50%);
+  transform:translateY(-50%);
+  left:0;
+  right:0;
+  margin:auto;
+  text-align:center
+}
+
+#left, #add {
+  margin-right:10px
+}
+
+#right, #remove {
+  margin-left:10px
+}
+
+#down {
+  margin-right:1px
+}
+
+#remove {
+  margin-right:2px
 }

@@ -219,32 +219,20 @@ function postRoll() {
 
   switch (currentPlayer) {
     case 1:
-      $("#turn").removeClass();
-      $("#turn").addClass("player-1");
+      $(".btn-outline-warning").removeClass("btn-outline-warning").addClass("btn-outline-danger");
       $("#turn").text("player 1's turn");
-      $("#roll").removeClass();
-      $("#roll").addClass("btn btn-outline-danger")
       break;
     case 2:
-      $("#turn").removeClass();
-      $("#turn").addClass("player-2");
+      $(".btn-outline-danger").removeClass("btn-outline-danger").addClass("btn-outline-primary");
       $("#turn").text("player 2's turn");
-      $("#roll").removeClass();
-      $("#roll").addClass("btn btn-outline-primary")
       break;
     case 3:
-      $("#turn").removeClass();
-      $("#turn").addClass("player-3");
+      $(".btn-outline-primary").removeClass("btn-outline-primary").addClass("btn-outline-success");
       $("#turn").text("player 3's turn");
-      $("#roll").removeClass();
-      $("#roll").addClass("btn btn-outline-success")
       break;
     case 4:
-      $("#turn").removeClass();
-      $("#turn").addClass("player-4");
+      $(".btn-outline-success").removeClass("btn-outline-success").addClass("btn-outline-warning");
       $("#turn").text("player 4's turn");
-      $("#roll").removeClass();
-      $("#roll").addClass("btn btn-outline-warning")
   }
 }
 

@@ -139,6 +139,14 @@ h3 small {
   margin-bottom:1em
 }
 
+#direction_container, #sign_container {
+  margin:0 !important
+}
+
+#roll_container {
+  margin-top:-30px !important
+}
+
 .icon-button {
   position:relative;
   width:26px;

@@ -13,6 +13,9 @@ var ownership = Array(11).fill(0).map(x => Array(11).fill(0));
 var vim = Array(11).fill(0).map(x => Array(11).fill(0));
 // thanks Longfei Wu
 
+var direction = null;
+var sign = null;
+
 var loadSound = new Howl({
   src: ["res/audio/load.ogg"],
   volume: 0.5
@@ -179,6 +182,64 @@ function predraw(players) {
   }
 }
 
+function chooseDirection(choice) {
+  switch (choice) {
+    case 1:
+      $("#up").addClass("active");
+      setTimeout(function () {
+        $("#up").removeClass("active");
+        $("#direction_container").addClass("d-none");
+        $("#sign_container").removeClass("d-none");
+      }, 750)
+      break;
+    case 2:
+      $("#right").addClass("active");
+      setTimeout(function () {
+        $("#right").removeClass("active");
+        $("#direction_container").addClass("d-none");
+        $("#sign_container").removeClass("d-none");
+      }, 750)
+      break;
+    case 3:
+      $("#down").addClass("active");
+      setTimeout(function () {
+        $("#down").removeClass("active");
+        $("#direction_container").addClass("d-none");
+        $("#sign_container").removeClass("d-none");
+      }, 750)
+      break;
+    case 4:
+      $("#left").addClass("active");
+      setTimeout(function () {
+        $("#left").removeClass("active");
+        $("#direction_container").addClass("d-none");
+        $("#sign_container").removeClass("d-none");
+      }, 750)
+  }
+  
+  direction = choice;
+}
+
+function chooseSign(choice) {
+  switch (choice) {
+    case 1:
+      $("#add").addClass("active");
+      setTimeout(function () {
+        $("#add").removeClass("active");
+        $("#sign_container").addClass("d-none");
+        $("#roll_container").removeClass("d-none");
+      }, 750)
+      break;
+    case 2:
+      $("#remove").addClass("active");
+      setTimeout(function () {
+        $("#remove").removeClass("active");
+        $("#sign_container").addClass("d-none");
+        $("#roll_container").removeClass("d-none");
+      }, 750)
+  }
+}
+
 function roll() {
   // disable the button for the die
   $("#roll").attr("disabled", true);
@@ -234,6 +295,9 @@ function postRoll() {
       $(".btn-outline-success").removeClass("btn-outline-success").addClass("btn-outline-warning");
       $("#turn").text("player 4's turn");
   }
+  
+  $("#roll_container").addClass("d-none");
+  $("#direction_container").removeClass("d-none");
 }
 
 // ctx.fillStyle = "white";
@@ -247,6 +311,30 @@ $("#3_player").click(function() {
 });
 $("#4_player").click(function() {
   start(4);
+});
+
+$("#up").click(function() {
+  chooseDirection(1);
+});
+
+$("#right").click(function() {
+  chooseDirection(2);
+});
+
+$("#down").click(function() {
+  chooseDirection(3);
+});
+
+$("#left").click(function() {
+  chooseDirection(4);
+});
+
+$("#add").click(function() {
+  chooseSign(1);
+});
+
+$("#remove").click(function() {
+  chooseSign(2);
 });
 
 $("#roll").click(function() {

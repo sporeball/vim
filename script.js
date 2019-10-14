@@ -33,9 +33,11 @@ var rollSound = new Howl({
 
 var ready = false;
 
-window.addEventListener('DOMContentLoaded', (event) => {
-  ready = true;
-  $("#gesture").removeClass("d-none");
+Pace.on("done", function() {
+  setTimeout(function() {
+    ready = true;
+    $("#gesture").removeClass("d-none");
+  }, 250) // the "done" event seems to fire a little early
 });
 
 $("#gesture").click(function() {

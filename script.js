@@ -55,17 +55,21 @@ $("#gesture").click(function() {
     
 function init() {
   setTimeout(function() {
-    $("#2_player").removeClass("d-none");
+    $(".subtitle").removeClass("d-none");
     uiSound.play();
   }, 750)
   setTimeout(function() {
+    $("#2_player").removeClass("d-none");
+    uiSound.play();
+  }, 1500)
+  setTimeout(function() {
     $("#3_player").removeClass("d-none");
     uiSound.play();
-  }, 1000)
+  }, 1750)
   setTimeout(function() {
     $("#4_player").removeClass("d-none");
     uiSound.play();
-  }, 1250)
+  }, 2000)
 }
 
 // start game with a certain number of players

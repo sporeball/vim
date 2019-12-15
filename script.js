@@ -5,46 +5,35 @@ document.addEventListener("DOMContentLoaded", victus.setup({
   color: "#fff"
 }));
 
-var ctx = x();
+const ctx = x();
 
 // variable initialization
 var playerCount = 0;
 var currentPlayer = 1;
 
-var locations = Array(11).fill(0).map(x => Array(11).fill(0));
-var ownership = Array(11).fill(0).map(x => Array(11).fill(0));
-var vim = Array(11).fill(0).map(x => Array(11).fill(0));
-// thanks Longfei Wu
+var locations = ownership = vim = Array(11).fill(0).map(x => Array(11).fill(0));
 
-var direction = null;
-var sign = null;
+var direction = sign = null;
 
-var loadSound = new victus.Sound("res/audio/load.ogg", 0.5);
-var uiSound = new victus.Sound("res/audio/ui.wav", 0.5);
-var startSound = new victus.Sound("res/audio/start.wav", 1);
-var selectSound = new victus.Sound("res/audio/select.ogg", 0.5);
-var rollSound = new victus.Sound("res/audio/roll.ogg", 1);
-
-var ready = false;
+var loadSound = new victus.Sound("res/audio/load.ogg", 0.5),
+  uiSound = new victus.Sound("res/audio/ui.wav", 0.5),
+  startSound = new victus.Sound("res/audio/start.wav", 1),
+  selectSound = new victus.Sound("res/audio/select.ogg", 0.5),
+  rollSound = new victus.Sound("res/audio/roll.ogg", 1);
 
 Pace.on("done", function() {
   setTimeout(function() {
-    ready = true;
     document.getElementById("gesture").classList.remove("d-none");
   }, 250) // the "done" event seems to fire a little early
 });
 
 document.getElementById("gesture").onclick = () => {
-  if (ready) {
     document.getElementById("gesture").classList.add("d-none");
     setTimeout(function() {
       loadSound.play();
       document.getElementById("title").classList.remove("d-none");
       init();
     }, 500)
-  } else {
-    
-  }
 }
     
 function init() {
@@ -68,28 +57,20 @@ function init() {
 
 // start game with a certain number of players
 function start(players) {
+  playerCount = players;
+  
   switch (players) {
-    case 2:
-      playerCount = 2;
-      document.getElementById("player_2").classList.add("player-last");
-      document.getElementById("player_count").innerHTML = "(2-player)";
-      predraw(2);
-      break;
     case 3:
-      playerCount = 3;
       document.getElementById("player_3").classList.remove("d-none");
-      document.getElementById("player_3").classList.add("player-last");
-      document.getElementById("player_count").innerHTML = "(3-player)";
-      predraw(3);
       break;
     case 4:
-      playerCount = 4;
       document.getElementById("player_3").classList.remove("d-none");
       document.getElementById("player_4").classList.remove("d-none");
-      document.getElementById("player_4").classList.add("player-last");
-      document.getElementById("player_count").innerHTML = "(4-player)";
-      predraw(4);
   }
+  
+  document.getElementById(`player_${playerCount}`).classList.add("player-last");
+  document.getElementById("player_count").innerHTML = `(${playerCount}-player)`;
+  predraw(playerCount);
 
   document.getElementById("start").classList.add("d-none");
   document.getElementById("game").classList.remove("d-none");
@@ -115,15 +96,13 @@ function grid() {
 // set center to false to draw in the player's corner (movement)
 // set center to true to draw in the center (ownership)
 function draw(player, cx, cy, center) {
-  var x;
-  var y;
+  var x, y;
   var radius = 5;
 
   switch (player) {
     case 1:
       ctx.fillStyle = "#ea323c";
-      x = (cx * 50) + 10;
-      y = (cy * 50) + 10;
+      x = y = (cx * 50) + 10;
       break;
     case 2:
       ctx.fillStyle = "#0098dc";
@@ -137,15 +116,14 @@ function draw(player, cx, cy, center) {
       break;
     case 4:
       ctx.fillStyle = "#ffc825";
-      x = (cx * 50) + 40;
-      y = (cy * 50) + 40;
+      x = y = (cx * 50) + 40;
   }
 
-  if (center) {
+  /* if (center) {
     x = 25;
     y = 25;
     radius = 10;
-  }
+  } */
 
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -174,64 +152,64 @@ function predraw(players) {
 }
 
 function chooseDirection(choice) {
+  direction = choice;
+  
   switch (choice) {
     case 1:
       document.getElementById("up").classList.add("active");
       setTimeout(function () {
         document.getElementById("up").classList.remove("active");
-        document.getElementById("direction_container").classList.add("d-none");
-        document.getElementById("sign_container").classList.remove("d-none");
       }, 750)
       break;
     case 2:
       document.getElementById("right").classList.add("active");
       setTimeout(function () {
         document.getElementById("right").classList.remove("active");
-        document.getElementById("direction_container").classList.add("d-none");
-        document.getElementById("sign_container").classList.remove("d-none");
       }, 750)
       break;
     case 3:
       document.getElementById("down").classList.add("active");
       setTimeout(function () {
         document.getElementById("down").classList.remove("active");
-        document.getElementById("direction_container").classList.add("d-none");
-        document.getElementById("sign_container").classList.remove("d-none");
       }, 750)
       break;
     case 4:
       document.getElementById("left").classList.add("active");
       setTimeout(function () {
         document.getElementById("left").classList.remove("active");
-        document.getElementById("direction_container").classList.add("d-none");
-        document.getElementById("sign_container").classList.remove("d-none");
       }, 750)
   }
   
-  direction = choice;
+  setTimeout(function() {
+    document.getElementById("direction_container").classList.add("d-none");
+    document.getElementById("sign_container").classList.remove("d-none");
+  }, 750)
+  
   selectSound.play();
 }
 
 function chooseSign(choice) {
+  sign = choice;
+  
   switch (choice) {
     case 1:
       document.getElementById("add").classList.add("active");
       setTimeout(function () {
         document.getElementById("add").classList.remove("active");
-        document.getElementById("sign_container").classList.add("d-none");
-        document.getElementById("roll_container").classList.remove("d-none");
       }, 750)
       break;
     case 2:
       document.getElementById("remove").classList.add("active");
       setTimeout(function () {
         document.getElementById("remove").classList.remove("active");
-        document.getElementById("sign_container").classList.add("d-none");
-        document.getElementById("roll_container").classList.remove("d-none");
       }, 750)
   }
   
-  sign = choice;
+  setTimeout(function() {
+    document.getElementById("sign_container").classList.add("d-none");
+    document.getElementById("roll_container").classList.remove("d-none");
+  }, 750)
+  
   selectSound.play();
 }
 

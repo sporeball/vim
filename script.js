@@ -1,10 +1,13 @@
-// inits
-var canvas = document.getElementById("canvas"),
-  ctx = canvas.getContext("2d");
-canvas.width = 550;
-canvas.height = 550;
-ctx.font = "12px Arial";
+document.addEventListener("DOMContentLoaded", victus.setup({
+  id: "canvas",
+  w: 550,
+  h: 550,
+  color: "#fff"
+}));
 
+var ctx = x();
+
+// variable initialization
 var playerCount = 0;
 var currentPlayer = 1;
 
@@ -16,66 +19,49 @@ var vim = Array(11).fill(0).map(x => Array(11).fill(0));
 var direction = null;
 var sign = null;
 
-var loadSound = new Howl({
-  src: ["res/audio/load.ogg"],
-  volume: 0.5
-});
-
-var uiSound = new Howl({
-  src: ["res/audio/ui.wav"],
-  volume: 0.5
-});
-
-var startSound = new Howl({
-  src: ["res/audio/start.wav"]
-});
-
-var selectSound = new Howl({
-  src: ["res/audio/select.ogg"],
-  volume: 0.5
-});
-
-var rollSound = new Howl({
-  src: ["res/audio/roll.ogg"]
-});
+var loadSound = new victus.Sound("res/audio/load.ogg", 0.5);
+var uiSound = new victus.Sound("res/audio/ui.wav", 0.5);
+var startSound = new victus.Sound("res/audio/start.wav", 1);
+var selectSound = new victus.Sound("res/audio/select.ogg", 0.5);
+var rollSound = new victus.Sound("res/audio/roll.ogg", 1);
 
 var ready = false;
 
 Pace.on("done", function() {
   setTimeout(function() {
     ready = true;
-    $("#gesture").removeClass("d-none");
+    document.getElementById("gesture").classList.remove("d-none");
   }, 250) // the "done" event seems to fire a little early
 });
 
-$("#gesture").click(function() {
+document.getElementById("gesture").onclick = () => {
   if (ready) {
-    $("#gesture").addClass("d-none");
+    document.getElementById("gesture").classList.add("d-none");
     setTimeout(function() {
       loadSound.play();
-      $("h1").removeClass("d-none");
+      document.getElementById("title").classList.remove("d-none");
       init();
     }, 500)
   } else {
     
   }
-});
+}
     
 function init() {
   setTimeout(function() {
-    $(".subtitle").removeClass("d-none");
+    document.getElementById("subtitle").classList.remove("d-none");
     uiSound.play();
   }, 750)
   setTimeout(function() {
-    $("#2_player").removeClass("d-none");
+    document.getElementById("2_player").classList.remove("d-none");
     uiSound.play();
   }, 1500)
   setTimeout(function() {
-    $("#3_player").removeClass("d-none");
+    document.getElementById("3_player").classList.remove("d-none");
     uiSound.play();
   }, 1750)
   setTimeout(function() {
-    $("#4_player").removeClass("d-none");
+    document.getElementById("4_player").classList.remove("d-none");
     uiSound.play();
   }, 2000)
 }
@@ -85,28 +71,28 @@ function start(players) {
   switch (players) {
     case 2:
       playerCount = 2;
-      $("#player_2").addClass("player-last");
-      $("#player_count").text("(2-player)");
+      document.getElementById("player_2").classList.add("player-last");
+      document.getElementById("player_count").innerHTML = "(2-player)";
       predraw(2);
       break;
     case 3:
       playerCount = 3;
-      $("#player_3").removeClass("d-none");
-      $("#player_3").addClass("player-last");
-      $("#player_count").text("(3-player)");
+      document.getElementById("player_3").classList.remove("d-none");
+      document.getElementById("player_3").classList.add("player-last");
+      document.getElementById("player_count").innerHTML = "(3-player)";
       predraw(3);
       break;
     case 4:
       playerCount = 4;
-      $("#player_3").removeClass("d-none");
-      $("#player_4").removeClass("d-none");
-      $("#player_4").addClass("player-last");
-      $("#player_count").text("(4-player)");
+      document.getElementById("player_3").classList.remove("d-none");
+      document.getElementById("player_4").classList.remove("d-none");
+      document.getElementById("player_4").classList.add("player-last");
+      document.getElementById("player_count").innerHTML = "(4-player)";
       predraw(4);
   }
 
-  $("#start").addClass("d-none");
-  $("#game").removeClass("d-none");
+  document.getElementById("start").classList.add("d-none");
+  document.getElementById("game").classList.remove("d-none");
   
   startSound.play();
 
@@ -190,35 +176,35 @@ function predraw(players) {
 function chooseDirection(choice) {
   switch (choice) {
     case 1:
-      $("#up").addClass("active");
+      document.getElementById("up").classList.add("active");
       setTimeout(function () {
-        $("#up").removeClass("active");
-        $("#direction_container").addClass("d-none");
-        $("#sign_container").removeClass("d-none");
+        document.getElementById("up").classList.remove("active");
+        document.getElementById("direction_container").classList.add("d-none");
+        document.getElementById("sign_container").classList.remove("d-none");
       }, 750)
       break;
     case 2:
-      $("#right").addClass("active");
+      document.getElementById("right").classList.add("active");
       setTimeout(function () {
-        $("#right").removeClass("active");
-        $("#direction_container").addClass("d-none");
-        $("#sign_container").removeClass("d-none");
+        document.getElementById("right").classList.remove("active");
+        document.getElementById("direction_container").classList.add("d-none");
+        document.getElementById("sign_container").classList.remove("d-none");
       }, 750)
       break;
     case 3:
-      $("#down").addClass("active");
+      document.getElementById("down").classList.add("active");
       setTimeout(function () {
-        $("#down").removeClass("active");
-        $("#direction_container").addClass("d-none");
-        $("#sign_container").removeClass("d-none");
+        document.getElementById("down").classList.remove("active");
+        document.getElementById("direction_container").classList.add("d-none");
+        document.getElementById("sign_container").classList.remove("d-none");
       }, 750)
       break;
     case 4:
-      $("#left").addClass("active");
+      document.getElementById("left").classList.add("active");
       setTimeout(function () {
-        $("#left").removeClass("active");
-        $("#direction_container").addClass("d-none");
-        $("#sign_container").removeClass("d-none");
+        document.getElementById("left").classList.remove("active");
+        document.getElementById("direction_container").classList.add("d-none");
+        document.getElementById("sign_container").classList.remove("d-none");
       }, 750)
   }
   
@@ -229,19 +215,19 @@ function chooseDirection(choice) {
 function chooseSign(choice) {
   switch (choice) {
     case 1:
-      $("#add").addClass("active");
+      document.getElementById("add").classList.add("active");
       setTimeout(function () {
-        $("#add").removeClass("active");
-        $("#sign_container").addClass("d-none");
-        $("#roll_container").removeClass("d-none");
+        document.getElementById("add").classList.remove("active");
+        document.getElementById("sign_container").classList.add("d-none");
+        document.getElementById("roll_container").classList.remove("d-none");
       }, 750)
       break;
     case 2:
-      $("#remove").addClass("active");
+      document.getElementById("remove").classList.add("active");
       setTimeout(function () {
-        $("#remove").removeClass("active");
-        $("#sign_container").addClass("d-none");
-        $("#roll_container").removeClass("d-none");
+        document.getElementById("remove").classList.remove("active");
+        document.getElementById("sign_container").classList.add("d-none");
+        document.getElementById("roll_container").classList.remove("d-none");
       }, 750)
   }
   
@@ -251,14 +237,13 @@ function chooseSign(choice) {
 
 function roll() {
   // disable the button for the die
-  $("#roll").attr("disabled", true);
+  document.getElementById("roll").setAttribute("disabled", "");
   
-  rollSound.seek(1);
   rollSound.play();
 
   // start to change the face of the die
   var face = setInterval(function() {
-    $("#roll").text(String(Math.floor(Math.random() * 6) + 1));
+    document.getElementById("roll").innerHTML = String(Math.floor(Math.random() * 6) + 1);
   }, 100)
 
   // stop changing the face of the die
@@ -268,84 +253,40 @@ function roll() {
   }, 2000);
   
   setTimeout(function() {
-    $("#roll").addClass("hover");
+    document.getElementById("roll").classList.add("hover");
   }, 2000);
 
   // revert the button to how it was before
   setTimeout(function() {
-    $("#roll").removeClass("hover");
-    $("#roll").text("roll!");
-    $("#roll").attr("disabled", false);
+    document.getElementById("roll").classList.remove("hover");
+    document.getElementById("roll").innerHTML = "roll!";
+    document.getElementById("roll").removeAttribute("disabled");
     postRoll();
   }, 3250)
 }
 
 function postRoll() {
-  if (currentPlayer !== playerCount) {
-    currentPlayer++;
-  } else {
-    currentPlayer = 1;
-  }
+  currentPlayer != playerCount ? currentPlayer++ : currentPlayer = 1;
 
-  switch (currentPlayer) {
-    case 1:
-      $(".btn-outline-warning").removeClass("btn-outline-warning").addClass("btn-outline-danger");
-      $("#turn").text("player 1's turn");
-      break;
-    case 2:
-      $(".btn-outline-danger").removeClass("btn-outline-danger").addClass("btn-outline-primary");
-      $("#turn").text("player 2's turn");
-      break;
-    case 3:
-      $(".btn-outline-primary").removeClass("btn-outline-primary").addClass("btn-outline-success");
-      $("#turn").text("player 3's turn");
-      break;
-    case 4:
-      $(".btn-outline-success").removeClass("btn-outline-success").addClass("btn-outline-warning");
-      $("#turn").text("player 4's turn");
-  }
+  document.getElementById("turn").innerHTML = `player ${currentPlayer}'s turn`
   
-  $("#roll_container").addClass("d-none");
-  $("#direction_container").removeClass("d-none");
+  document.getElementById("roll_container").classList.add("d-none");
+  document.getElementById("direction_container").classList.remove("d-none");
 }
 
 // ctx.fillStyle = "white";
 // ctx.fillText("1", 22, 29);
 
-$("#2_player").click(function() {
-  start(2);
-});
-$("#3_player").click(function() {
-  start(3);
-});
-$("#4_player").click(function() {
-  start(4);
-});
+document.getElementById("2_player").onclick = () => { start(2); }
+document.getElementById("3_player").onclick = () => { start(3); }
+document.getElementById("4_player").onclick = () => { start(4); }
 
-$("#up").click(function() {
-  chooseDirection(1);
-});
+document.getElementById("up").onclick = () => { chooseDirection(1); }
+document.getElementById("right").onclick = () => { chooseDirection(2); }
+document.getElementById("down").onclick = () => { chooseDirection(3); }
+document.getElementById("left").onclick = () => { chooseDirection(4); }
 
-$("#right").click(function() {
-  chooseDirection(2);
-});
+document.getElementById("add").onclick = () => { chooseSign(1); }
+document.getElementById("remove").onclick = () => { chooseSign(2); }
 
-$("#down").click(function() {
-  chooseDirection(3);
-});
-
-$("#left").click(function() {
-  chooseDirection(4);
-});
-
-$("#add").click(function() {
-  chooseSign(1);
-});
-
-$("#remove").click(function() {
-  chooseSign(2);
-});
-
-$("#roll").click(function() {
-  roll();
-})
+document.getElementById("roll").onclick = () => { roll(); }

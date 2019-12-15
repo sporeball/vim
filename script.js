@@ -11,15 +11,20 @@ const ctx = x();
 var playerCount = 0;
 var currentPlayer = 1;
 
-var locations = ownership = vim = Array(11).fill(0).map(x => Array(11).fill(0));
-
-var direction = sign = null;
+var player1 = new victus.Ellipse(260, 260, 5, 5, "#ea323c"),
+  player2 = new victus.Ellipse(290, 260, 5, 5, "#0098dc"),
+  player3 = new victus.Ellipse(260, 290, 5, 5, "#5ac54f"),
+  player4 = new victus.Ellipse(290, 290, 5, 5, "#ffc825");
 
 var loadSound = new victus.Sound("res/audio/load.ogg", 0.5),
   uiSound = new victus.Sound("res/audio/ui.wav", 0.5),
   startSound = new victus.Sound("res/audio/start.wav", 1),
   selectSound = new victus.Sound("res/audio/select.ogg", 0.5),
   rollSound = new victus.Sound("res/audio/roll.ogg", 1);
+  
+// var locations = ownership = vim = Array(11).fill(0).map(x => Array(11).fill(0));  
+
+var direction = sign = null;
 
 Pace.on("done", function() {
   setTimeout(function() {
@@ -60,7 +65,12 @@ function start(players) {
   playerCount = players;
   
   switch (players) {
+    case 2:
+      player3.hide();
+      player4.hide();
+      break;
     case 3:
+      player4.hide();
       document.getElementById("player_3").classList.remove("d-none");
       break;
     case 4:
@@ -70,14 +80,13 @@ function start(players) {
   
   document.getElementById(`player_${playerCount}`).classList.add("player-last");
   document.getElementById("player_count").innerHTML = `(${playerCount}-player)`;
-  predraw(playerCount);
 
   document.getElementById("start").classList.add("d-none");
   document.getElementById("game").classList.remove("d-none");
   
   startSound.play();
-
-  grid();
+  
+  window.requestAnimationFrame(loop);
 }
 
 function grid() {
@@ -92,63 +101,16 @@ function grid() {
   }
 }
 
-// draw a circle for a specific player in the square at coordinates cx,cy
-// set center to false to draw in the player's corner (movement)
-// set center to true to draw in the center (ownership)
-function draw(player, cx, cy, center) {
-  var x, y;
-  var radius = 5;
-
-  switch (player) {
-    case 1:
-      ctx.fillStyle = "#ea323c";
-      x = y = (cx * 50) + 10;
-      break;
-    case 2:
-      ctx.fillStyle = "#0098dc";
-      x = (cx * 50) + 40;
-      y = (cy * 50) + 10;
-      break;
-    case 3:
-      ctx.fillStyle = "#5ac54f";
-      x = (cx * 50) + 10;
-      y = (cy * 50) + 40;
-      break;
-    case 4:
-      ctx.fillStyle = "#ffc825";
-      x = y = (cx * 50) + 40;
-  }
-
-  /* if (center) {
-    x = 25;
-    y = 25;
-    radius = 10;
-  } */
-
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, 2 * Math.PI);
-  ctx.fill();
-}
-
-// setup function
-// creates a few draw calls at once for the start of the game
-function predraw(players) {
-  switch (players) {
-    case 2:
-      draw(1, 5, 5, 0);
-      draw(2, 5, 5, 0);
-      break;
-    case 3:
-      draw(1, 5, 5, 0);
-      draw(2, 5, 5, 0);
-      draw(3, 5, 5, 0);
-      break;
-    case 4:
-      draw(1, 5, 5, 0);
-      draw(2, 5, 5, 0);
-      draw(3, 5, 5, 0);
-      draw(4, 5, 5, 0);
-  }
+function loop() {
+  victus.clear();
+  
+  grid();
+  player1.draw();
+  player2.draw();
+  player3.draw();
+  player4.draw();
+  
+  window.requestAnimationFrame(loop);
 }
 
 function chooseDirection(choice) {

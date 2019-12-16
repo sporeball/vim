@@ -18,9 +18,9 @@
       <center>
         <h1 class="d-none" id="title">vim</h1>
         <p class="d-none subtitle" id="subtitle">a game of squares</p>
-        <button id="2_player" class="btn btn-outline-primary d-none">2-player</button>
-        <button id="3_player" class="btn btn-outline-success d-none">3-player</button>
-        <button id="4_player" class="btn btn-outline-warning d-none">4-player</button>
+        <button id="2_player" class="btn btn-outline-primary d-none" onclick="start(2)">2-player</button>
+        <button id="3_player" class="btn btn-outline-success d-none" onclick="start(3)">3-player</button>
+        <button id="4_player" class="btn btn-outline-warning d-none" onclick="start(4)">4-player</button>
       </center>
     </div>
     <div id="game" class="d-none">
@@ -38,24 +38,23 @@
         <p id="turn" class="player-1">player 1's turn</p>
       </center>
       <center id="direction_container">
-        <button id="up" class="btn btn-outline-danger icon-button"><i class="icon" data-feather="arrow-up"></i></button>
+        <button id="up" class="btn btn-outline-danger icon-button" onclick="chooseDirection(1)"><i class="icon" data-feather="arrow-up"></i></button>
         <br/>
-        <button id="left" class="btn btn-outline-danger icon-button"><i class="icon" data-feather="arrow-left"></i></button>
-        <button id="right" class="btn btn-outline-danger icon-button"><i class="icon" data-feather="arrow-right"></i></button>
+        <button id="left" class="btn btn-outline-danger icon-button" onclick="chooseDirection(2)"><i class="icon" data-feather="arrow-left"></i></button>
+        <button id="right" class="btn btn-outline-danger icon-button" onclick="chooseDirection(3)"><i class="icon" data-feather="arrow-right"></i></button>
         <br/>
-        <button id="down" class="btn btn-outline-danger icon-button"><i class="icon" data-feather="arrow-down"></i></button>
+        <button id="down" class="btn btn-outline-danger icon-button" onclick="chooseDirection(4)"><i class="icon" data-feather="arrow-down"></i></button>
       </center>
       <br/>
       <center id="sign_container" class="d-none">
-        <button id="add" class="btn btn-outline-danger icon-button"><i class="icon" data-feather="plus"></i></button>
-        <button id="remove" class="btn btn-outline-danger icon-button"><i class="icon" data-feather="minus"></i></button>
+        <button id="add" class="btn btn-outline-danger icon-button" onclick="chooseSign(1)"><i class="icon" data-feather="plus"></i></button>
+        <button id="remove" class="btn btn-outline-danger icon-button" onclick="chooseSign(2)"><i class="icon" data-feather="minus"></i></button>
       </center>
       <br/>
       <center id="roll_container" class="d-none">
-        <button id="roll" class="btn btn-outline-danger">roll!</button>
+        <button id="roll" class="btn btn-outline-danger" onclick="roll()">roll!</button>
       </center>
     </div>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/victus@0.6.0/build/victus.bundle.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/victus@0.7.0/build/victus.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script>feather.replace()</script>

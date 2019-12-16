@@ -26,42 +26,42 @@ var loadSound = new victus.Sound("res/audio/load.ogg", 0.5),
 
 var direction = sign = null;
 
-Pace.on("done", function() {
-  setTimeout(function() {
+Pace.on("done", () => {
+  setTimeout(() => {
     document.getElementById("gesture").classList.remove("d-none");
   }, 250) // the "done" event seems to fire a little early
 });
 
 document.getElementById("gesture").onclick = () => {
     document.getElementById("gesture").classList.add("d-none");
-    setTimeout(function() {
+    setTimeout(() => {
       loadSound.play();
       document.getElementById("title").classList.remove("d-none");
       init();
     }, 500)
 }
     
-function init() {
-  setTimeout(function() {
+init = () => {
+  setTimeout(() => {
     document.getElementById("subtitle").classList.remove("d-none");
     uiSound.play();
   }, 750)
-  setTimeout(function() {
+  setTimeout(() => {
     document.getElementById("2_player").classList.remove("d-none");
     uiSound.play();
   }, 1500)
-  setTimeout(function() {
+  setTimeout(() => {
     document.getElementById("3_player").classList.remove("d-none");
     uiSound.play();
   }, 1750)
-  setTimeout(function() {
+  setTimeout(() => {
     document.getElementById("4_player").classList.remove("d-none");
     uiSound.play();
   }, 2000)
 }
 
 // start game with a certain number of players
-function start(players) {
+start = players => {
   playerCount = players;
   
   switch (players) {
@@ -89,7 +89,7 @@ function start(players) {
   window.requestAnimationFrame(loop);
 }
 
-function grid() {
+grid = () => {
   for (var i = 0; i < 11; i++) {
     for (var j = 0; j < 11; j++) {
       ctx.beginPath();
@@ -101,7 +101,7 @@ function grid() {
   }
 }
 
-function loop() {
+loop = () => {
   victus.clear();
   
   grid();
@@ -113,36 +113,36 @@ function loop() {
   window.requestAnimationFrame(loop);
 }
 
-function chooseDirection(choice) {
+chooseDirection = choice => {
   direction = choice;
   
   switch (choice) {
     case 1:
       document.getElementById("up").classList.add("active");
-      setTimeout(function () {
+      setTimeout(() => {
         document.getElementById("up").classList.remove("active");
       }, 750)
       break;
     case 2:
       document.getElementById("right").classList.add("active");
-      setTimeout(function () {
+      setTimeout(() => {
         document.getElementById("right").classList.remove("active");
       }, 750)
       break;
     case 3:
       document.getElementById("down").classList.add("active");
-      setTimeout(function () {
+      setTimeout(() => {
         document.getElementById("down").classList.remove("active");
       }, 750)
       break;
     case 4:
       document.getElementById("left").classList.add("active");
-      setTimeout(function () {
+      setTimeout(() => {
         document.getElementById("left").classList.remove("active");
       }, 750)
   }
   
-  setTimeout(function() {
+  setTimeout(() => {
     document.getElementById("direction_container").classList.add("d-none");
     document.getElementById("sign_container").classList.remove("d-none");
   }, 750)
@@ -150,24 +150,24 @@ function chooseDirection(choice) {
   selectSound.play();
 }
 
-function chooseSign(choice) {
+chooseSign = choice => {
   sign = choice;
   
   switch (choice) {
     case 1:
       document.getElementById("add").classList.add("active");
-      setTimeout(function () {
+      setTimeout(() => {
         document.getElementById("add").classList.remove("active");
       }, 750)
       break;
     case 2:
       document.getElementById("remove").classList.add("active");
-      setTimeout(function () {
+      setTimeout(() => {
         document.getElementById("remove").classList.remove("active");
       }, 750)
   }
   
-  setTimeout(function() {
+  setTimeout(() => {
     document.getElementById("sign_container").classList.add("d-none");
     document.getElementById("roll_container").classList.remove("d-none");
   }, 750)
@@ -175,29 +175,29 @@ function chooseSign(choice) {
   selectSound.play();
 }
 
-function roll() {
+roll = () => {
   // disable the button for the die
   document.getElementById("roll").setAttribute("disabled", "");
   
   rollSound.play();
 
   // start to change the face of the die
-  var face = setInterval(function() {
+  var face = setInterval(() => {
     document.getElementById("roll").innerHTML = String(Math.floor(Math.random() * 6) + 1);
   }, 100)
 
   // stop changing the face of the die
   // also adds hover styles to indicate a face has been chosen
-  setTimeout(function() {
+  setTimeout(() => {
     clearInterval(face);
   }, 2000);
   
-  setTimeout(function() {
+  setTimeout(() => {
     document.getElementById("roll").classList.add("hover");
   }, 2000);
 
   // revert the button to how it was before
-  setTimeout(function() {
+  setTimeout(() => {
     document.getElementById("roll").classList.remove("hover");
     document.getElementById("roll").innerHTML = "roll!";
     document.getElementById("roll").removeAttribute("disabled");
@@ -205,7 +205,7 @@ function roll() {
   }, 3250)
 }
 
-function postRoll() {
+postRoll = () => {
   currentPlayer != playerCount ? currentPlayer++ : currentPlayer = 1;
 
   document.getElementById("turn").innerHTML = `player ${currentPlayer}'s turn`
@@ -216,17 +216,3 @@ function postRoll() {
 
 // ctx.fillStyle = "white";
 // ctx.fillText("1", 22, 29);
-
-document.getElementById("2_player").onclick = () => { start(2); }
-document.getElementById("3_player").onclick = () => { start(3); }
-document.getElementById("4_player").onclick = () => { start(4); }
-
-document.getElementById("up").onclick = () => { chooseDirection(1); }
-document.getElementById("right").onclick = () => { chooseDirection(2); }
-document.getElementById("down").onclick = () => { chooseDirection(3); }
-document.getElementById("left").onclick = () => { chooseDirection(4); }
-
-document.getElementById("add").onclick = () => { chooseSign(1); }
-document.getElementById("remove").onclick = () => { chooseSign(2); }
-
-document.getElementById("roll").onclick = () => { roll(); }

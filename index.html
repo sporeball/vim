@@ -11,7 +11,7 @@
     <script src="res/pace.min.js"></script>
   </head>
   <body>
-    <div id="gesture" class="d-none">
+    <div id="gesture" class="d-none" onclick="gesture()">
       <p>[ click to start ]</p>
     </div>
     <div id="start">
@@ -38,17 +38,17 @@
         <p id="turn" class="player-1">player 1's turn</p>
       </center>
       <center id="direction_container">
-        <button id="up" class="btn btn-outline-danger icon-button" onclick="chooseDirection(1)"><i class="icon" data-feather="arrow-up"></i></button>
+        <button id="up" class="btn btn-outline-danger icon-button" onclick="chooseDirection('up')"><i class="icon" data-feather="arrow-up"></i></button>
         <br/>
-        <button id="left" class="btn btn-outline-danger icon-button" onclick="chooseDirection(2)"><i class="icon" data-feather="arrow-left"></i></button>
-        <button id="right" class="btn btn-outline-danger icon-button" onclick="chooseDirection(3)"><i class="icon" data-feather="arrow-right"></i></button>
+        <button id="left" class="btn btn-outline-danger icon-button" onclick="chooseDirection('left')"><i class="icon" data-feather="arrow-left"></i></button>
+        <button id="right" class="btn btn-outline-danger icon-button" onclick="chooseDirection('right')"><i class="icon" data-feather="arrow-right"></i></button>
         <br/>
-        <button id="down" class="btn btn-outline-danger icon-button" onclick="chooseDirection(4)"><i class="icon" data-feather="arrow-down"></i></button>
+        <button id="down" class="btn btn-outline-danger icon-button" onclick="chooseDirection('down')"><i class="icon" data-feather="arrow-down"></i></button>
       </center>
       <br/>
       <center id="sign_container" class="d-none">
-        <button id="add" class="btn btn-outline-danger icon-button" onclick="chooseSign(1)"><i class="icon" data-feather="plus"></i></button>
-        <button id="remove" class="btn btn-outline-danger icon-button" onclick="chooseSign(2)"><i class="icon" data-feather="minus"></i></button>
+        <button id="add" class="btn btn-outline-danger icon-button" onclick="chooseSign('add')"><i class="icon" data-feather="plus"></i></button>
+        <button id="remove" class="btn btn-outline-danger icon-button" onclick="chooseSign('remove')"><i class="icon" data-feather="minus"></i></button>
       </center>
       <br/>
       <center id="roll_container" class="d-none">

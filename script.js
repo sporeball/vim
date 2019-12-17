@@ -32,7 +32,7 @@ Pace.on("done", () => {
   }, 250) // the "done" event seems to fire a little early
 });
 
-document.getElementById("gesture").onclick = () => {
+gesture = () => {
     document.getElementById("gesture").classList.add("d-none");
     setTimeout(() => {
       loadSound.play();
@@ -116,33 +116,10 @@ loop = () => {
 chooseDirection = choice => {
   direction = choice;
   
-  switch (choice) {
-    case 1:
-      document.getElementById("up").classList.add("active");
-      setTimeout(() => {
-        document.getElementById("up").classList.remove("active");
-      }, 750)
-      break;
-    case 2:
-      document.getElementById("right").classList.add("active");
-      setTimeout(() => {
-        document.getElementById("right").classList.remove("active");
-      }, 750)
-      break;
-    case 3:
-      document.getElementById("down").classList.add("active");
-      setTimeout(() => {
-        document.getElementById("down").classList.remove("active");
-      }, 750)
-      break;
-    case 4:
-      document.getElementById("left").classList.add("active");
-      setTimeout(() => {
-        document.getElementById("left").classList.remove("active");
-      }, 750)
-  }
+  document.getElementById(choice).classList.add("active");  
   
   setTimeout(() => {
+    document.getElementById(choice).classList.remove("active");
     document.getElementById("direction_container").classList.add("d-none");
     document.getElementById("sign_container").classList.remove("d-none");
   }, 750)
@@ -153,21 +130,10 @@ chooseDirection = choice => {
 chooseSign = choice => {
   sign = choice;
   
-  switch (choice) {
-    case 1:
-      document.getElementById("add").classList.add("active");
-      setTimeout(() => {
-        document.getElementById("add").classList.remove("active");
-      }, 750)
-      break;
-    case 2:
-      document.getElementById("remove").classList.add("active");
-      setTimeout(() => {
-        document.getElementById("remove").classList.remove("active");
-      }, 750)
-  }
+  document.getElementById(choice).classList.add("active");
   
   setTimeout(() => {
+    document.getElementById(choice).classList.remove("active");
     document.getElementById("sign_container").classList.add("d-none");
     document.getElementById("roll_container").classList.remove("d-none");
   }, 750)

@@ -8,11 +8,11 @@ body {
 }
 
 h1 {
-  padding:1em 1em 0.5em 1em;
+  padding:1em 1em 0.5em 1em
 }
 
 h1, h3, .subtitle {
-  margin-bottom:0 !important;
+  margin-bottom:0 !important
 }
 
 h3 small {
@@ -21,26 +21,26 @@ h3 small {
 }
 
 .subtitle {
-  padding-bottom:5em;
+  padding-bottom:5em
 }
 
 #gesture {
-  width:90%;
-  height:90%;
   position:relative;
   top:50%;
   transform:translateY(-50%);
-  margin:0 auto
+  margin:0 auto;
+  width:90%;
+  height:90%
 }
 
 #gesture p {
-  font-size:16px;
-  text-align:center;
   position:relative;
   top:50%;
+  transform:translateY(-50%);
+  font-size:16px;
+  text-align:center;
   -ms-transform:translateY(-50%);
-  -webkit-transform:translateY(-50%);
-  transform:translateY(-50%)
+  -webkit-transform:translateY(-50%)
 }
 
 #start {
@@ -56,31 +56,31 @@ h3 small {
 }
 
 .btn-outline-danger:disabled.hover {
-  color:#fff;
-  background-color:#dc3545;
+  opacity:1;
   border-color:#dc3545;
-  opacity:1
+  background-color:#dc3545;
+  color:#fff
 }
 
 .btn-outline-primary:disabled.hover {
-  color:#fff;
-  background-color:#007bff;
+  opacity:1;
   border-color:#007bff;
-  opacity:1
+  background-color:#007bff;
+  color:#fff
 }
 
 .btn-outline-success:disabled.hover {
-  color:#fff;
-  background-color:#28a745;
+  opacity:1;
   border-color:#28a745;
-  opacity:1
+  background-color:#28a745;
+  color:#fff
 }
 
 .btn-outline-warning:disabled.hover {
-  color:black;
-  background-color:#ffc107;
+  opacity:1;
   border-color:#ffc107;
-  opacity:1
+  background-color:#ffc107;
+  color:black
 }
 
 #start .btn {
@@ -154,17 +154,17 @@ h3 small {
 }
 
 .icon-button svg {
-  width:16px;
-  height:16px;
   position:absolute;
   top:50%;
-  -webkit-transform:translateY(-50%);
-  -ms-transform:translateY(-50%);
-  transform:translateY(-50%);
   left:0;
   right:0;
+  transform:translateY(-50%);
   margin:auto;
-  text-align:center
+  width:16px;
+  height:16px;
+  text-align:center;
+  -webkit-transform:translateY(-50%);
+  -ms-transform:translateY(-50%)
 }
 
 #left, #add {

@@ -27,40 +27,40 @@ let sign;
 // when done loading assets, display the gesture prompt
 Pace.on("done", () => {
   setTimeout(() => {
-    document.getElementById("gesture").classList.remove("d-none");
+    showElement('gesture');
   }, 250); // the "done" event seems to fire a little early
 });
 
 // called when a gesture is received
 function gesture () {
-  document.getElementById("gesture").classList.add("d-none");
+  hideElement('gesture');
   setTimeout(() => {
     loadSound.reset();
     loadSound.play();
-    document.getElementById("title").classList.remove("d-none");
     mainMenu();
   }, 500);
 }
 
 // display the main menu
 function mainMenu () {
+  showElement('title');
   setTimeout(() => {
-    document.getElementById("subtitle").classList.remove("d-none");
+    showElement('subtitle');
     uiSound.reset();
     uiSound.play();
   }, 750);
   setTimeout(() => {
-    document.getElementById("2_player").classList.remove("d-none");
+    showElement('2_player');
     uiSound.reset();
     uiSound.play();
   }, 1500);
   setTimeout(() => {
-    document.getElementById("3_player").classList.remove("d-none");
+    showElement('3_player');
     uiSound.reset();
     uiSound.play();
   }, 1750);
   setTimeout(() => {
-    document.getElementById("4_player").classList.remove("d-none");
+    showElement('4_player');
     uiSound.reset();
     uiSound.play();
   }, 2000);
@@ -77,18 +77,18 @@ function start (players) {
       break;
     case 3:
       player4.hide();
-      document.getElementById("player_3").classList.remove("d-none");
+      showElement('player_3');
       break;
     case 4:
-      document.getElementById("player_3").classList.remove("d-none");
-      document.getElementById("player_4").classList.remove("d-none");
+      showElement('player_3');
+      showElement('player_4');
   }
 
   document.getElementById(`player_${playerCount}`).classList.add("player-last");
   document.getElementById("player_count").innerHTML = `(${playerCount}-player)`;
 
-  document.getElementById("start").classList.add("d-none");
-  document.getElementById("game").classList.remove("d-none");
+  hideElement('start');
+  showElement('game');
 
   startSound.reset();
   startSound.play();
@@ -112,8 +112,8 @@ function chooseDirection (choice) {
   // show sign prompt
   setTimeout(() => {
     document.getElementById(choice).classList.remove("active");
-    document.getElementById("direction_container").classList.add("d-none");
-    document.getElementById("sign_container").classList.remove("d-none");
+    hideElement('direction_container');
+    showElement('sign_container');
   }, 750)
 
   selectSound.reset();
@@ -132,8 +132,8 @@ function chooseSign (choice) {
   // show roll prompt
   setTimeout(() => {
     document.getElementById(choice).classList.remove("active");
-    document.getElementById("sign_container").classList.add("d-none");
-    document.getElementById("roll_container").classList.remove("d-none");
+    hideElement('sign_container');
+    showElement('roll_container');
   }, 750);
 
   selectSound.reset();
@@ -172,8 +172,8 @@ function nextTurn () {
   currentPlayer != playerCount ? currentPlayer++ : currentPlayer = 1;
   document.getElementById("turn").innerHTML = `player ${currentPlayer}'s turn`
   // show direction prompt
-  document.getElementById("roll_container").classList.add("d-none");
-  document.getElementById("direction_container").classList.remove("d-none");
+  hideElement('roll_container');
+  showElement('direction_container');
 }
 
 /**
@@ -199,6 +199,18 @@ function drawGrid () {
       victus.ctx.stroke();
     }
   }
+}
+
+/**
+ * utility functions
+ */
+
+function showElement (element) {
+  document.getElementById(element).classList.remove("d-none");
+}
+
+function hideElement (element) {
+  document.getElementById(element).classList.add("d-none");
 }
 
 /**

@@ -232,11 +232,18 @@ function move () {
     let ty = players[currentPlayer - 1].ty;
     if (sign === 'add') {
       setVim(tx, ty, getVim(tx, ty)?.vim + rollResult || rollResult);
-    } else if (sign === 'remove') {
-      setVim(tx, ty, getVim(tx, ty)?.vim - rollResult || rollResult);
-    }
-    if (getVim(tx, ty) < 0) {
+    } else if (sign === 'remove' && getVim(tx, ty)?.vim > 0) {
+      setVim(tx, ty, getVim(tx, ty)?.vim - rollResult);
+    } else {}
+    if (getVim(tx, ty)?.vim <= 0) {
       setVim(tx, ty, 0);
+      // unset ownership and vim
+      let ownershipIndex = ownership.findIndex(square => square.x === tx && square.y === ty);
+      ownership[ownershipIndex] = undefined;
+      let vimIndex = vim.findIndex(square => square.x === tx && square.y === ty);
+      vim[vimIndex] = undefined;
+      ownership = ownership.filter(square => square !== undefined);
+      vim = vim.filter(square => square !== undefined);
     }
   }, (250 * rollResult));
   // move on to the next turn

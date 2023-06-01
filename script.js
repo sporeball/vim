@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", victus.setup({
   color: "#fff"
 }));
 
-const player1 = new victus.Ellipse(261, 261, 10, 10, "#ea323c"),
-  player2 = new victus.Ellipse(291, 261, 10, 10, "#0098dc"),
-  player3 = new victus.Ellipse(261, 291, 10, 10, "#5ac54f"),
-  player4 = new victus.Ellipse(291, 291, 10, 10, "#ffc825");
+const player1 = new victus.Ellipse(261, 261, 10, 10, "#ea323c", {tx: 5, ty: 5}),
+  player2 = new victus.Ellipse(291, 261, 10, 10, "#0098dc", {tx: 5, ty: 5}),
+  player3 = new victus.Ellipse(261, 291, 10, 10, "#5ac54f", {tx: 5, ty: 5}),
+  player4 = new victus.Ellipse(291, 291, 10, 10, "#ffc825", {tx: 5, ty: 5});
+const players = [player1, player2, player3, player4];
 
 const loadSound = new victus.Sound("res/audio/load.ogg", 0.5),
   uiSound = new victus.Sound("res/audio/ui.wav", 0.5),
@@ -21,6 +22,7 @@ const loadSound = new victus.Sound("res/audio/load.ogg", 0.5),
 let playerCount;
 let currentPlayer = 1;
 
+let rollResult;
 let direction;
 let sign;
 
@@ -114,7 +116,7 @@ function chooseDirection (choice) {
     document.getElementById(choice).classList.remove("active");
     hideElement('direction_container');
     showElement('sign_container');
-  }, 750)
+  }, 750);
 
   selectSound.reset();
   selectSound.play();
@@ -148,13 +150,14 @@ function roll () {
   rollSound.reset();
   rollSound.play();
   // start to change the face of the die
-  let face = setInterval(() => {
-    document.getElementById("roll").innerHTML = String(Math.floor(Math.random() * 6) + 1);
+  let rollInterval = setInterval(() => {
+    rollResult = Math.floor(Math.random() * 6) + 1;
+    document.getElementById("roll").innerHTML = String(rollResult);
   }, 100)
   // stop changing the face of the die
   // also adds hover styles to indicate a face has been chosen
   setTimeout(() => {
-    clearInterval(face);
+    clearInterval(rollInterval);
     document.getElementById("roll").classList.add("hover");
   }, 2000);
   // revert the button to how it was before
@@ -162,8 +165,60 @@ function roll () {
     document.getElementById("roll").classList.remove("hover");
     document.getElementById("roll").innerHTML = "roll!";
     document.getElementById("roll").removeAttribute("disabled");
-    nextTurn();
+    hideElement('roll_container');
+    move();
   }, 3250)
+}
+
+function move () {
+  console.log(rollResult);
+  console.log(direction);
+  console.log(sign);
+  let movementFunction;
+  // determine how the player coordinates need to change
+  switch (direction) {
+    case 'left':
+      movementFunction = () => {
+        if (players[currentPlayer - 1].tx > 0) {
+          players[currentPlayer - 1].moveBy(-50, 0);
+          players[currentPlayer - 1].tx--;
+        }
+      };
+      break;
+    case 'right':
+      movementFunction = () => {
+        if (players[currentPlayer - 1].tx < 10) {
+          players[currentPlayer - 1].moveBy(50, 0);
+          players[currentPlayer - 1].tx++;
+        }
+      };
+      break;
+    case 'up':
+      movementFunction = () => {
+        if (players[currentPlayer - 1].ty > 0) {
+          players[currentPlayer - 1].moveBy(0, -50);
+          players[currentPlayer - 1].ty--;
+        }
+      };
+      break;
+    case 'down':
+      movementFunction = () => {
+        if (players[currentPlayer - 1].ty < 10) {
+          players[currentPlayer - 1].moveBy(0, 50);
+          players[currentPlayer - 1].ty++;
+        }
+      };
+  }
+  // move the player
+  for (let i = 1; i <= rollResult; i++) {
+    setTimeout(() => {
+      movementFunction();
+    }, 250 * i);
+  }
+  // move on to the next turn
+  setTimeout(() => {
+    nextTurn();
+  }, (250 * rollResult) + 500);
 }
 
 // move on to the next turn
@@ -172,7 +227,6 @@ function nextTurn () {
   currentPlayer != playerCount ? currentPlayer++ : currentPlayer = 1;
   document.getElementById("turn").innerHTML = `player ${currentPlayer}'s turn`
   // show direction prompt
-  hideElement('roll_container');
   showElement('direction_container');
 }
 

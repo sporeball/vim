@@ -108,7 +108,9 @@ function start (players) {
 function addCash () {
   for (const square of ownership) {
     const squareVim = getVim(square.x, square.y).vim;
-    players[square.player - 1].cash += squareVim;
+    if (players[square.player - 1].cash > 0) {
+      players[square.player - 1].cash += squareVim;
+    }
   }
   updateCashUI();
 }
@@ -276,9 +278,18 @@ function move () {
 
 // move on to the next turn
 function nextTurn () {
+  // end the game if there is only one player left
+  if (numLivingPlayers() === 1) {
+    const winner = players.findIndex(player => player.cash > 0) + 1;
+    document.getElementById('turn').innerHTML = `player ${winner} wins!`;
+    return;
+  }
   // update whose turn it is
   currentPlayer != playerCount ? currentPlayer++ : currentPlayer = 1;
-  document.getElementById("turn").innerHTML = `player ${currentPlayer}'s turn`
+  if (players[currentPlayer - 1].cash === 0) {
+    return nextTurn();
+  }
+  document.getElementById("turn").innerHTML = `player ${currentPlayer}'s turn`;
   // add cash
   addCash();
   // show direction prompt
@@ -383,6 +394,10 @@ function setVim (tx, ty, value) {
 
 function squareIsOwned (tx, ty) {
   return getOwnership(tx, ty) !== undefined;
+}
+
+function numLivingPlayers () {
+  return players.filter(player => !player.hidden && player.cash > 0).length;
 }
 
 /**

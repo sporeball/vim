@@ -26,6 +26,9 @@ let rollResult;
 let direction;
 let sign;
 
+let ownership = [];
+let vim = [];
+
 // when done loading assets, display the gesture prompt
 Pace.on("done", () => {
   setTimeout(() => {
@@ -215,6 +218,27 @@ function move () {
       movementFunction();
     }, 250 * i);
   }
+  // update ownership
+  setTimeout(() => {
+    let tx = players[currentPlayer - 1].tx;
+    let ty = players[currentPlayer - 1].ty;
+    if (sign === 'add' && !squareIsOwned(tx, ty)) {
+      setOwnership(tx, ty, currentPlayer);
+    }
+  }, (250 * rollResult));
+  // update vim
+  setTimeout(() => {
+    let tx = players[currentPlayer - 1].tx;
+    let ty = players[currentPlayer - 1].ty;
+    if (sign === 'add') {
+      setVim(tx, ty, getVim(tx, ty)?.vim + rollResult || rollResult);
+    } else if (sign === 'remove') {
+      setVim(tx, ty, getVim(tx, ty)?.vim - rollResult || rollResult);
+    }
+    if (getVim(tx, ty) < 0) {
+      setVim(tx, ty, 0);
+    }
+  }, (250 * rollResult));
   // move on to the next turn
   setTimeout(() => {
     nextTurn();
@@ -255,6 +279,34 @@ function drawGrid () {
   }
 }
 
+function drawOwnership () {
+  for (const ownedSquare of ownership) {
+    victus.ctx.beginPath();
+    victus.ctx.fillStyle = ['#ea323c', '#0098dc', '#5ac54f', '#ffc825'][ownedSquare.player - 1];
+    victus.ctx.ellipse(
+      ownedSquare.x * 50 + 25,
+      ownedSquare.y * 50 + 25,
+      10,
+      10,
+      0,
+      0,
+      2 * Math.PI
+    );
+    victus.ctx.fill();
+  }
+}
+
+function drawVim () {
+  for (const square of vim) {
+    victus.ctx.fillStyle = (getOwnership(square.x, square.y).player === 4) ? '#000' : '#fff';
+    victus.ctx.fillText(
+      String(square.vim),
+      square.x * 50 + 22 - (square.vim > 9 ? 2 : 0),
+      square.y * 50 + 29
+    );
+  }
+}
+
 /**
  * utility functions
  */
@@ -267,6 +319,34 @@ function hideElement (element) {
   document.getElementById(element).classList.add("d-none");
 }
 
+function getOwnership (tx, ty) {
+  return ownership.find(square => square.x === tx && square.y === ty);
+}
+
+function setOwnership (tx, ty, player) {
+  if (!squareIsOwned(tx, ty)) {
+    ownership.push({x: tx, y: ty, player});
+  } else {
+    getOwnership(tx, ty).player = player;
+  }
+}
+
+function getVim (tx, ty) {
+  return vim.find(square => square.x === tx && square.y === ty);
+}
+
+function setVim (tx, ty, value) {
+  if (getVim(tx, ty) === undefined) {
+    vim.push({x: tx, y: ty, vim: value});
+  } else {
+    getVim(tx, ty).vim = value;
+  }
+}
+
+function squareIsOwned (tx, ty) {
+  return getOwnership(tx, ty) !== undefined;
+}
+
 /**
  * main loop
  */
@@ -276,6 +356,8 @@ function main () {
 
   drawGrid();
   drawPlayers();
+  drawOwnership();
+  drawVim();
 
   window.requestAnimationFrame(main);
 }

@@ -110,10 +110,20 @@ function addCash () {
     const squareVim = getVim(square.x, square.y).vim;
     players[square.player - 1].cash += squareVim;
   }
-  document.getElementById('player_1').innerHTML = '$' + String(player1.cash);
-  document.getElementById('player_2').innerHTML = '$' + String(player2.cash);
-  document.getElementById('player_3').innerHTML = '$' + String(player3.cash);
-  document.getElementById('player_4').innerHTML = '$' + String(player4.cash);
+  updateCashUI();
+}
+
+function tryDeductCash () {
+  let tx = players[currentPlayer - 1].tx;
+  let ty = players[currentPlayer - 1].ty;
+  let squareOwnership = getOwnership(tx, ty);
+  if (squareOwnership !== undefined && squareOwnership?.player !== currentPlayer) {
+    players[currentPlayer - 1].cash -= getVim(tx, ty).vim * 2;
+  }
+  if (players[currentPlayer - 1].cash < 0) {
+    players[currentPlayer - 1].cash = 0;
+  }
+  updateCashUI();
 }
 
 /**
@@ -227,6 +237,7 @@ function move () {
   for (let i = 1; i <= rollResult; i++) {
     setTimeout(() => {
       movementFunction();
+      tryDeductCash();
     }, 250 * i);
   }
   // update ownership
@@ -325,6 +336,13 @@ function drawVim () {
       square.y * 50 + 29
     );
   }
+}
+
+function updateCashUI() {
+  document.getElementById('player_1').innerHTML = '$' + String(player1.cash);
+  document.getElementById('player_2').innerHTML = '$' + String(player2.cash);
+  document.getElementById('player_3').innerHTML = '$' + String(player3.cash);
+  document.getElementById('player_4').innerHTML = '$' + String(player4.cash);
 }
 
 /**

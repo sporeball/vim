@@ -5,10 +5,10 @@ document.addEventListener("DOMContentLoaded", victus.setup({
   color: "#fff"
 }));
 
-const player1 = new victus.Ellipse(261, 261, 10, 10, "#ea323c", {tx: 5, ty: 5}),
-  player2 = new victus.Ellipse(291, 261, 10, 10, "#0098dc", {tx: 5, ty: 5}),
-  player3 = new victus.Ellipse(261, 291, 10, 10, "#5ac54f", {tx: 5, ty: 5}),
-  player4 = new victus.Ellipse(291, 291, 10, 10, "#ffc825", {tx: 5, ty: 5});
+const player1 = new victus.Ellipse(261, 261, 10, 10, "#ea323c", {tx: 5, ty: 5, cash: 20}),
+  player2 = new victus.Ellipse(291, 261, 10, 10, "#0098dc", {tx: 5, ty: 5, cash: 20}),
+  player3 = new victus.Ellipse(261, 291, 10, 10, "#5ac54f", {tx: 5, ty: 5, cash: 20}),
+  player4 = new victus.Ellipse(291, 291, 10, 10, "#ffc825", {tx: 5, ty: 5, cash: 20});
 const players = [player1, player2, player3, player4];
 
 const loadSound = new victus.Sound("res/audio/load.ogg", 0.5),
@@ -104,6 +104,17 @@ function start (players) {
 /**
  * game functions
  */
+
+function addCash () {
+  for (const square of ownership) {
+    const squareVim = getVim(square.x, square.y).vim;
+    players[square.player - 1].cash += squareVim;
+  }
+  document.getElementById('player_1').innerHTML = '$' + String(player1.cash);
+  document.getElementById('player_2').innerHTML = '$' + String(player2.cash);
+  document.getElementById('player_3').innerHTML = '$' + String(player3.cash);
+  document.getElementById('player_4').innerHTML = '$' + String(player4.cash);
+}
 
 /**
  * choose which direction you want to move in
@@ -257,6 +268,8 @@ function nextTurn () {
   // update whose turn it is
   currentPlayer != playerCount ? currentPlayer++ : currentPlayer = 1;
   document.getElementById("turn").innerHTML = `player ${currentPlayer}'s turn`
+  // add cash
+  addCash();
   // show direction prompt
   showElement('direction_container');
 }
